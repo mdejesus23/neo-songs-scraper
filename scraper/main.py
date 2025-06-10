@@ -4,7 +4,7 @@ from bs4 import BeautifulSoup
 from urllib.parse import urlparse
 from time import sleep
 
-BASE_URL = "https://neocatechumenalway.wixsite.com/song/election"
+BASE_URL = "https://neocatechumenalway.wixsite.com/song/liturgical"
 HEADERS = {"User-Agent": "Mozilla/5.0"}
 
 def get_song_links():
@@ -17,16 +17,17 @@ def get_song_links():
     
     for a in anchors:
         href = a['href']
-        if "song/cantos3/" in href:
+        if "song/cantos/" in href:
             song_links.append((a.text.strip(), href))
     
     print(f"🎶 Found {len(song_links)} song links.")
+    print(f"🔗 Example link: {song_links[0] if song_links else 'None'}")
     return song_links
 
 def download_image(image_url, filename):
     try:
         os.makedirs("images", exist_ok=True)
-        filepath = os.path.join("images/election", filename)
+        filepath = os.path.join("images/liturgical", filename)
         res = requests.get(image_url, headers=HEADERS)
         with open(filepath, 'wb') as f:
             f.write(res.content)
